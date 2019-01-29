@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { callbackify } from 'util';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +14,20 @@ export class AppComponent {
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'home',
+      callback: null
     },
     {
       title: 'List',
       url: '/list',
-      icon: 'list'
+      icon: 'list',
+      callback: null
+    },
+    {
+      title: 'Salir',
+      url: null,
+      icon: 'log-out',
+      callback: () => this.logout()
     }
   ];
 
@@ -28,6 +37,10 @@ export class AppComponent {
     private statusBar: StatusBar
   ) {
     this.initializeApp();
+  }
+
+  logout() {
+    console.log('Logout...');
   }
 
   initializeApp() {

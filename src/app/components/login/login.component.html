@@ -1,0 +1,15 @@
+<ion-content>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" novalidate>
+    <ion-item>
+      <ion-icon name="at"></ion-icon>
+      <ion-input type="email" formControlName="email" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="key"></ion-icon>
+      <ion-input padding-rigth type="password" formControlName="password" required></ion-input>
+    </ion-item>
+    <ion-item button type="submit" color="primary" text-center [disabled]="!loginForm.valid">
+      <ion-label>Login</ion-label>
+    </ion-item>
+  </form>
+</ion-content>
