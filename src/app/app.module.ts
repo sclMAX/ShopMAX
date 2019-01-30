@@ -1,3 +1,5 @@
+import { LoginPage } from './pages/login/login.page';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppCoreModule } from './app.core.module';
 import { NgModule } from '@angular/core';
@@ -25,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule
   ],
   providers: [
+    AuthService,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

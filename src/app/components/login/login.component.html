@@ -1,23 +1,25 @@
-<ion-content>
+<ion-list padding>
+
+  <ion-item text-center color="dark">
+    <ion-label>Autentifiquese por favor</ion-label>
+  </ion-item>
+
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" novalidate>
     <ion-item>
       <ion-icon name="at"></ion-icon>
-      <ion-input type="email" formControlName="email" required></ion-input>
+      <ion-input type="email" formControlName="email" required autocomplete="on" autocorrect="on" autofocus></ion-input>
     </ion-item>
     <ion-item>
       <ion-icon name="key"></ion-icon>
       <ion-input padding-rigth type="password" formControlName="password" required></ion-input>
     </ion-item>
+    <ion-item color="none" lines="none">
+      <ion-button (click)="resetPassword()" color="medium" slot="end" fill="outline" shape="round" size="small" [disabled]="!loginForm.controls.email.valid">
+        <small>Olvide mi contraseña!</small>
+      </ion-button>
+    </ion-item>
     <ion-item button (click)="onSubmit($event)" color="primary" text-center [disabled]="!loginForm.valid">
-      <ion-label>Login</ion-label>
+      <ion-label>ENTRAR</ion-label>
     </ion-item>
   </form>
-  <ion-item button color="danger" text-center >
-    <ion-icon name="logo-google"></ion-icon>
-    <ion-label>Entrar con Google</ion-label>
-  </ion-item>
-  <ion-item button color="secondary" text-center >
-    <ion-icon name="logo-facebook"></ion-icon>
-    <ion-label>Entrar con Facebook</ion-label>
-  </ion-item>
-</ion-content>
+</ion-list>

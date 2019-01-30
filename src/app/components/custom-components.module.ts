@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [LogoutButtonComponent, LoginComponent],
-  entryComponents: [LogoutButtonComponent],
+  entryComponents: [LogoutButtonComponent, LoginComponent],
   imports: [
     CommonModule, IonicModule, FormsModule, ReactiveFormsModule
   ],

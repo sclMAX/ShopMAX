@@ -8,9 +8,17 @@
       </ion-header>
       <ion-content color="medium">
         <ion-list color="medium" no-padding>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button color="medium">
+              <ion-avatar slot="start" *ngIf="(user | async)?.photoURL">
+                <ion-img [src]="(user | async)?.photoURL"></ion-img>
+              </ion-avatar>
+              <ion-icon slot="start" *ngIf="!(user | async)?.photoURL" name="person"></ion-icon>
+              <ion-label>{{((user | async)?.displayName)?(user | async)?.displayName:'Usuario'}}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="p?.url?[p?.url]:[]" (click)="(p?.callback)?p?.callback():null"
-              color="medium">
+            <ion-item [routerDirection]="'root'" [routerLink]="p?.url" color="medium">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title}}

@@ -14,7 +14,7 @@ import {environment} from 'src/environments/environment';
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
   ],
-  providers: [AuthService],
+  providers: [],
 })
 export class AppCoreModule {
 }
