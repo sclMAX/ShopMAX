@@ -1,7 +1,8 @@
 <ion-list padding>
 
   <ion-item text-center color="dark">
-    <ion-label>Autentifiquese por favor</ion-label>
+    <ion-label color="warning">Bienvenido a ShopMax!</ion-label>
+
   </ion-item>
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" novalidate>
@@ -14,12 +15,15 @@
       <ion-input padding-rigth type="password" formControlName="password" required></ion-input>
     </ion-item>
     <ion-item color="none" lines="none">
-      <ion-button (click)="resetPassword()" color="medium" slot="end" fill="outline" shape="round" size="small" [disabled]="!loginForm.controls.email.valid">
+      <ion-button (click)="resetPassword()" color="dark" slot="end" fill="outline" shape="round" size="small"
+        [disabled]="!loginForm.controls.email.valid">
         <small>Olvide mi contraseña!</small>
       </ion-button>
     </ion-item>
-    <ion-item button (click)="onSubmit($event)" color="primary" text-center [disabled]="!loginForm.valid">
-      <ion-label>ENTRAR</ion-label>
-    </ion-item>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button  (click)="onSubmit($event)" color="tertiary" [disabled]="!loginForm.valid">
+        <ion-icon name="log-in"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </form>
 </ion-list>

@@ -6,11 +6,21 @@ const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule',
+    loadChildren: './pages/home/home.module#HomePageModule',
     canActivate: [AuthGuard]
   },
-  {path: 'list', loadChildren: './list/list.module#ListPageModule', canActivate:[AuthGuard]},
-  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' }
+  {
+    path: 'list',
+    loadChildren: './pages/list/list.module#ListPageModule',
+    canActivate: [AuthGuard]
+  },
+  {path: 'login', loadChildren: './pages/login/login.module#LoginPageModule'},
+  {
+    path: 'user',
+    loadChildren: './pages/user/user.module#UserPageModule',
+    canActivate: [AuthGuard]
+  }
+
 
 ];
 

@@ -2,7 +2,7 @@ import {UserInterface} from './../../models/User';
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Observable, of} from 'rxjs';
-import {first, map, tap, switchMap, take} from 'rxjs/operators';
+import {map, switchMap, take} from 'rxjs/operators';
 import {
   AngularFirestore,
   AngularFirestoreDocument
@@ -38,17 +38,16 @@ export class AuthService {
     try {
       const res = await this.afAuth.auth.signInWithEmailAndPassword(
           credencial.email, credencial.password);
-      console.log('res', res);
       const user = await this.getUser(res.user.uid)
                        .pipe(take(1), map(data => data))
                        .toPromise();
       if (!user) {
         await this.updateUser(res.user);
-        return true;
       }
-      return false;
+      return true;
     } catch (e) {
       console.log('Error:', e);
+      throw e;
     }
   }
 
@@ -69,6 +68,27 @@ export class AuthService {
       emailVerified: user.emailVerified
     };
     return ref.set(data, {merge: true}).then(() => this.getUser(user.uid));
+  }
+
+
+  processLoginError(error): string {
+    if (!error || !error.code) {
+      return error;
+    }
+    switch (error.code) {
+      case 'auth/network-request-failed':
+        return 'Error de conexion... Controle su conexion de internet!';
+      case 'auth/invalid-email':
+        return 'Email incorrecto no registrado!';
+      case 'auth/user-disabled':
+        return 'El usuario ha sido suspendido!';
+      case 'auth/user-not-found':
+        return 'Usuario o Email no encontrado!';
+      case 'auth/wrong-password':
+        return 'Password incorrecta!';
+      default:
+        return error;
+    }
   }
 
   private getUser(uid: string): Observable<UserInterface> {
