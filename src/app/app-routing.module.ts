@@ -5,8 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'ventas', pathMatch: 'full' },
   {
-    path: 'list',
-    loadChildren: './pages/list/list.module#ListPageModule',
+    path: 'articulos',
+    loadChildren: './pages/articulos/articulos/articulos.module#ArticulosPageModule',
     canActivate: [AuthGuard]
   },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },

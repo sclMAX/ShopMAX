@@ -39,7 +39,7 @@ export class AppComponent {
   initializeMenu() {
     this.appPages = [
       { title: 'Ventas', url: '/ventas', icon: 'cart' },
-      { title: 'List', url: '/list', icon: 'list' },
+      { title: 'Articulos', url: '/articulos', icon: 'shirt' },
       { title: 'Usuario', url: '/user', icon: 'person' },
     ];
   }
