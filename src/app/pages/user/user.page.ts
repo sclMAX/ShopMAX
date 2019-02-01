@@ -1,7 +1,6 @@
-import {UserInterface} from './../../models/User';
-import {AuthService} from './../../services/auth/auth.service';
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import { UserService } from './../../services/user.service';
+import { UserInterface } from './../../models/User';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -9,8 +8,8 @@ import {Observable} from 'rxjs';
   styleUrls: ['./user.page.scss'],
 })
 export class UserPage implements OnInit {
-  user: Observable<UserInterface>;
-  constructor(private authService: AuthService) {}
+  user: UserInterface;
+  constructor(private userService: UserService) { }
 
-  ngOnInit() { this.user = this.authService.user; }
+  ngOnInit() { this.userService.user.subscribe(user => this.user = user); }
 }

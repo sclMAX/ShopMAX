@@ -1,7 +1,8 @@
-import {ModalController} from '@ionic/angular';
-import {Component, OnInit} from '@angular/core';
-import {LoginComponent} from 'src/app/components/login/login.component';
-import {Router} from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { LoginComponent } from 'src/app/components/login/login.component';
+import { Router } from '@angular/router';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-login',
@@ -9,11 +10,11 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  constructor(private modalCtrl: ModalController, private router: Router) {}
+  constructor(private modalCtrl: ModalController, private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  ionViewWillEnter() { this.presentModal().then(); }
+  ionViewWillEnter() { this.presentModal(); }
 
   async presentModal() {
     const modal = await this.modalCtrl.create({
@@ -22,9 +23,9 @@ export class LoginPage implements OnInit {
       showBackdrop: false,
       cssClass: 'login-modal'
     });
-    modal.onDidDismiss().then(() => {
-      console.log('Logged!');
-      this.router.navigate(['home']);
+    modal.onDidDismiss().then(async () => {
+      for (let i = 0; i < 100; i++) { }
+      return await this.router.navigate(['/']);
     });
     return await modal.present();
   }

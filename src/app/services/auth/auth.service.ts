@@ -1,48 +1,46 @@
-import {UserInterface} from './../../models/User';
-import {Injectable} from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {Observable, of} from 'rxjs';
-import {map, switchMap, take} from 'rxjs/operators';
+import { UserService } from './../user.service';
+import { UserInterface } from './../../models/User';
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 import {
   AngularFirestore,
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
-import {User} from 'firebase';
+import { User } from 'firebase';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private currentUser: Observable<UserInterface | null>;
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore) {
-    this.user = this.afAuth.authState.pipe(switchMap(user => {
+  constructor(private afAuth: AngularFireAuth, private userService: UserService, private afs: AngularFirestore) {
+    this.setUser();
+  }
+
+  async setUser() {
+    this.userService.user = await this.afAuth.authState.pipe(switchMap(user => {
       if (user) {
-        return this.getUser(user.uid);
+        return this.userService.getUser(user.uid);
       } else {
         return of(null);
       }
     }));
+  return;
   }
 
-
-
-  get user(): Observable<UserInterface> { return this.currentUser; }
-
-  set user(userData: Observable<UserInterface>) { this.currentUser = userData; }
-
-  isLogged(): Promise<boolean> {
-    return this.user.pipe(take(1),
-                          map(user => (user && user.uid) ? true : false))
-        .toPromise();
-  }
-
-  async login(credencial: {email: string, password: string}): Promise<boolean> {
+  async login(credencial: { email: string, password: string }): Promise<boolean> {
     try {
       const res = await this.afAuth.auth.signInWithEmailAndPassword(
-          credencial.email, credencial.password);
-      const user = await this.getUser(res.user.uid)
-                       .pipe(take(1), map(data => data))
-                       .toPromise();
+        credencial.email, credencial.password);
+      const user = await this.userService.getUser(res.user.uid)
+        .pipe(take(1))
+        .toPromise();
       if (!user) {
-        await this.updateUser(res.user);
+        const data: UserInterface = {
+          uid: res.user.uid,
+          email: res.user.email,
+          emailVerified: res.user.emailVerified
+        };
+        await this.userService.updateUser(data);
       }
       return true;
     } catch (e) {
@@ -56,18 +54,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.afAuth.auth.signOut().then(() => this.user = of(null));
-  }
-
-  updateUser(user: User | UserInterface) {
-    const ref: AngularFirestoreDocument<UserInterface> =
-        this.afs.doc<UserInterface>(`users/${user.uid}`);
-    const data: UserInterface = {
-      uid: user.uid,
-      email: user.email,
-      emailVerified: user.emailVerified
-    };
-    return ref.set(data, {merge: true}).then(() => this.getUser(user.uid));
+    return this.afAuth.auth.signOut();
   }
 
 
@@ -89,10 +76,5 @@ export class AuthService {
       default:
         return error;
     }
-  }
-
-  private getUser(uid: string): Observable<UserInterface> {
-    this.user = this.afs.doc<UserInterface>(`users/${uid}`).valueChanges();
-    return this.user;
   }
 }

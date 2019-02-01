@@ -9,11 +9,18 @@
       <ion-content color="medium">
         <ion-list color="medium" no-padding>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'forward'" [routerLink]="p?.url" color="medium">
+            <ion-item [routerDirection]="'root'" [routerLink]="p?.url" color="medium">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
-                {{p.title | async}}
+                {{p.title }}
               </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-item-divider color="medium"></ion-item-divider>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item (click)="logout()" [routerDirection]="'root'" routerLink="/login" color="medium">
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label>Salir</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

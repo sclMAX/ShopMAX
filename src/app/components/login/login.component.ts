@@ -29,7 +29,7 @@ export class LoginComponent {
     try {
       const loginStatus = await this.authService.login(this.loginForm.value);
       if (loginStatus) {
-        this.modalCtrl.dismiss();
+        await this.modalCtrl.dismiss();
       }
       load.dismiss();
     } catch (e) {
