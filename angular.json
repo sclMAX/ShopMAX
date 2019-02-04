@@ -39,7 +39,7 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": ["https://www.mercadopago.com.ar/integrations/v1/web-tokenize-checkout.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {

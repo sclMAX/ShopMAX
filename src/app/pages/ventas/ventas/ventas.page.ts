@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PaymentService} from 'src/app/lib/mercadopago/services/payment.service';
-import {Observable} from 'rxjs';
+import {Observable, from} from 'rxjs';
 import {PaymentMethodInterface} from 'src/app/lib/mercadopago/models/Payment';
 import {
   IdentificationTypeInterface
@@ -52,7 +52,13 @@ export class VentasPage implements OnInit {
 
         script.onerror = (error: any) =>
             resolve({script: name, loaded: false, status: 'Loaded'});
-        document.getElementsByTagName('head')[0].appendChild(script);
+        const form = document.createElement('form');
+        form.setAttribute('action', 'http://localhost:5000/shopmax/us-central1/procesarpago/10');
+        form.setAttribute('method', 'POST');
+        form.setAttribute('slot', 'end');
+        form.appendChild(script);
+
+        document.getElementsByName('pagoButton')[0].appendChild(form);
       } else {
         resolve({script: name, loaded: true, status: 'Already Loaded'});
       }

@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'ventas', pathMatch: 'full' },
   {
-    path: 'articulos',
+    path: 'articulos/:data',
     loadChildren: './pages/articulos/articulos/articulos.module#ArticulosPageModule',
     canActivate: [AuthGuard]
   },
@@ -15,7 +15,9 @@ const routes: Routes = [
     loadChildren: './pages/user/user.module#UserPageModule',
     canActivate: [AuthGuard]
   },
-  { path: 'ventas', loadChildren: './pages/ventas/ventas/ventas.module#VentasPageModule', canActivate: [AuthGuard] }
+  { path: 'ventas', loadChildren: './pages/ventas/ventas/ventas.module#VentasPageModule', canActivate: [AuthGuard] },
+  { path: 'procesar-pago', loadChildren: './pages/ventas/procesar-pago/procesar-pago.module#ProcesarPagoPageModule' }
+
 
 
 ];
