@@ -1,3 +1,4 @@
+import {UserService} from './../../../services/user.service';
 import {Component, OnInit} from '@angular/core';
 import {PaymentService} from 'src/app/lib/mercadopago/services/payment.service';
 import {Observable, from} from 'rxjs';
@@ -17,7 +18,8 @@ export class VentasPage implements OnInit {
   identificationTypes: Observable<IdentificationTypeInterface>;
   loaded = false;
 
-  constructor(private paymentService: PaymentService) {
+  constructor(private paymentService: PaymentService,
+              private usrService: UserService) {
     this.paymentService.token =
         'TEST-3257709747412373-012413-9b459b2bb667535ea246a09be2ed50f9-24703435';
   }
@@ -53,7 +55,9 @@ export class VentasPage implements OnInit {
         script.onerror = (error: any) =>
             resolve({script: name, loaded: false, status: 'Loaded'});
         const form = document.createElement('form');
-        form.setAttribute('action', 'http://localhost:5000/shopmax/us-central1/procesarpago/10');
+        form.setAttribute(
+            'action',
+            `http://localhost:5000/shopmax/us-central1/procesarpago/${this.usrService.userId}`);
         form.setAttribute('method', 'POST');
         form.setAttribute('slot', 'end');
         form.appendChild(script);

@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-icon size="large" name="shirt" slot="start"></ion-icon>
+    <ion-title>Nuevo Articulo...</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="medium">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size=3>
+          <ion-item>
+            <ion-input type="text" formControlName="codigo" placeholder="Codigo"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-input type="text" formControlName="nombre" placeholder="Nombre"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-input type="text" formControlName="descripcion" placeholder="Descripcion"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-input type="number" formControlName="precio_contado" placeholder="Precio Contado" min="0.00"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-input type="number" formControlName="precio_tarjeta" placeholder="Precio con Tarjeta" min="0"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center>
+        <ion-col align-self-center size="auto">
+          <div style="max-width: 250px;">
+            <ion-img placeholder="Agrega una imagen" style="max-height: 250px; max-width: 250px;" [src]="(imageURL | async)?(imageURL | async):'assets/250x250.png'"></ion-img>
+            <ion-progress-bar [value]="(uploadPercent | async)"></ion-progress-bar>
+            <ion-fab horizontal="end" vertical="top" slot="fixed">
+              <ion-fab-button size="small" color="tertiary" (click)="image.click()">
+                <ion-icon name="image"></ion-icon>
+                <input #image hidden type="file" accept=".jpg, .png" (change)="uploadFile($event)">
+              </ion-fab-button>
+            </ion-fab>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <pre>{{articulo | json}}</pre>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="onCancel()" color="light">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button type="submit" (click)="onSubmit()" [disabled]="!form.valid">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-item color="dark" lines="none"></ion-item>
+</ion-footer>

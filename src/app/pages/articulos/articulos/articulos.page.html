@@ -6,7 +6,17 @@
     <ion-title text-center>Articulos</ion-title>
   </ion-toolbar>
 </ion-header>
-  <pre>{{data | json}}</pre>
 <ion-content>
+  <ion-searchbar></ion-searchbar>
+  <ion-list>
+    <ion-item>
+      Articulo
+    </ion-item>
+  </ion-list>
 
 </ion-content>
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab-button (click)="addArticulo()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

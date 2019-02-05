@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from 'src/environments/environment';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -12,6 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
     CommonModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
   ],

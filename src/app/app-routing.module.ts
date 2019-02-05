@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'ventas', pathMatch: 'full' },
   {
-    path: 'articulos/:data',
+    path: 'articulos',
     loadChildren: './pages/articulos/articulos/articulos.module#ArticulosPageModule',
     canActivate: [AuthGuard]
   },

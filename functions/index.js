@@ -1,11 +1,6 @@
 const functions = require('firebase-functions');
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest(
-    (request, response) => { response.send("Hello from Firebase!"); });
-
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
 const express = require('express');
 const cors = require('cors');
 
@@ -14,16 +9,28 @@ const app = express();
 // Automatically allow cross-origin requests
 app.use(cors({origin: true}));
 
+function getUser(uid){
+  const db = admin.firestore();
+  return db.doc(`users/${uid}`).get().then(data=>{
+    console.log('USER:', data.data());
+    return data;
+  });
+}
 
 // build multiple CRUD interfaces:
-app.post('/:id', (req, res) => {
-  console.log(req.params[0]);
+app.post('/:uid', (req, res) => {
+  const uid = req.params['uid'];
+  getUser(uid).then();
+  console.log('uid:', uid);
   const token = req.body.token;
+  console.log('token:', token);
   const payment_method_id = req.body.payment_method_id;
+  console.log('payment_method_id:', payment_method_id);
   const installments = Number(req.body.installments);
+  console.log('installments:', installments);
   const issuer_id = req.body.issuer_id;
+  console.log('issuer_id:', issuer_id);
   if (req) {
-    console.log('Token', token);
     var mercadopago = require('mercadopago');
     mercadopago.configurations.setAccessToken(
         'TEST-3257709747412373-012413-9b459b2bb667535ea246a09be2ed50f9-24703435');
@@ -43,14 +50,8 @@ app.post('/:id', (req, res) => {
         .then(function(data) {
           // ...
           // Imprime el estado del pago
-          console.log(data);
-          res.redirect(`http://localhost:8100/articulos/${JSON.stringify(data.status)}`);
-          res.send(`<!DOCTYPE html>
-                    <html lang="es">
-                    <body>
-                    <pre>${JSON.stringify(data.body)}</pre>
-                    </body>
-                    </html>`);
+          console.log(data.body);
+          res.redirect(`http://localhost:8100/articulos/${data.status}`);
         })
         .catch(function(error) {
           // ...
@@ -63,3 +64,5 @@ app.post('/:id', (req, res) => {
 
 // Expose Express API as a single Cloud Function:
 exports.procesarpago = functions.https.onRequest(app);
+
+
