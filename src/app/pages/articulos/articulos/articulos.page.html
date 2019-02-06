@@ -9,8 +9,11 @@
 <ion-content>
   <ion-searchbar></ion-searchbar>
   <ion-list>
-    <ion-item>
-      Articulo
+    <ion-item *ngFor="let articulo of (articulos |async)">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="articulo?.iconURL"></ion-img>
+      </ion-thumbnail>
+      <ion-label>{{articulo?.nombre}}</ion-label>
     </ion-item>
   </ion-list>
 

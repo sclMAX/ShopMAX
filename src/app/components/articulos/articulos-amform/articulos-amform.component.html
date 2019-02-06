@@ -1,48 +1,17 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-icon size="large" name="shirt" slot="start"></ion-icon>
-    <ion-title>Nuevo Articulo...</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content color="medium">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
     <ion-grid fixed>
-      <ion-row>
-        <ion-col size=3>
-          <ion-item>
-            <ion-input type="text" formControlName="codigo" placeholder="Codigo"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-input type="text" formControlName="nombre" placeholder="Nombre"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-input type="text" formControlName="descripcion" placeholder="Descripcion"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-input type="number" formControlName="precio_contado" placeholder="Precio Contado" min="0.00"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-input type="number" formControlName="precio_tarjeta" placeholder="Precio con Tarjeta" min="0"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
       <ion-row justify-content-center>
         <ion-col align-self-center size="auto">
           <div style="max-width: 250px;">
-            <ion-img placeholder="Agrega una imagen" style="max-height: 250px; max-width: 250px;" [src]="(imageURL | async)?(imageURL | async):'assets/250x250.png'"></ion-img>
-            <ion-progress-bar [value]="(uploadPercent | async)"></ion-progress-bar>
+            <ion-img placeholder="Agrega una imagen" [src]="(articulo?.imageURL)?articulo?.imageURL:'assets/250x250.png'"></ion-img>
+            <ion-progress-bar [hidden]="!showProgress" [value]="(uploadPercent | async)"></ion-progress-bar>
             <ion-fab horizontal="end" vertical="top" slot="fixed">
               <ion-fab-button size="small" color="tertiary" (click)="image.click()">
                 <ion-icon name="image"></ion-icon>
@@ -53,7 +22,38 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <pre>{{articulo | json}}</pre>
+        <ion-col>
+          <ion-badge>Titulo</ion-badge> 
+          <ion-badge *ngIf="form.controls['nombre']?.errors?.notUnique"  color="danger">Articulo Existente!</ion-badge>
+          <ion-badge *ngIf="form.controls['nombre']?.errors?.minlength"  color="warning">Cuatro caracteres minimo!</ion-badge>
+          <ion-item>
+            <ion-input type="text" formControlName="nombre"  placeholder="Titulo" ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-badge>Descripción</ion-badge>
+          <ion-item>
+            <ion-input type="text" formControlName="descripcion" placeholder="Descripcion"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-badge>Precio Contado</ion-badge>
+          <ion-badge *ngIf="form.controls['precio_contado']?.errors?.min"  color="danger">min:1!</ion-badge>
+          <ion-item>
+            <ion-input type="number" formControlName="precio_contado" placeholder="Precio Contado" min="0.00"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-badge>Precio Tarjeta</ion-badge>
+          <ion-badge *ngIf="form.controls['precio_tarjeta']?.errors?.min"  color="danger">min:1!</ion-badge>
+          <ion-item>
+            <ion-input type="number" formControlName="precio_tarjeta" placeholder="Precio con Tarjeta" min="0"></ion-input>
+          </ion-item>
+        </ion-col>
       </ion-row>
     </ion-grid>
   </form>
