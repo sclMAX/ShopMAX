@@ -6,4 +6,7 @@ export interface ArticuloInterface {
   iconURL?: string;
   precio_contado?: number;
   precio_tarjeta?: number;
+  stock_total?: number;
+  talles?: Array<{talle: string, stock: number}>;
 }
+

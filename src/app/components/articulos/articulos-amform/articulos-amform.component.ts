@@ -9,7 +9,9 @@ import {
   Validators,
   AbstractControl,
   ValidationErrors,
-  AsyncValidatorFn
+  AsyncValidatorFn,
+  FormArray,
+  FormBuilder
 } from '@angular/forms';
 import {Component, OnInit, Input} from '@angular/core';
 import {ImageToolsService} from 'src/app/services/image-tools.service';
@@ -29,7 +31,7 @@ export class ArticulosAMFormComponent implements OnInit {
   showProgress = false;
   title: string;
 
-  constructor(private modalCtrl: ModalController,
+  constructor(private modalCtrl: ModalController, private fb: FormBuilder,
               private imgTools: ImageToolsService,
               private userService: UserService,
               private storage: AngularFireStorage,
@@ -47,18 +49,30 @@ export class ArticulosAMFormComponent implements OnInit {
   }
 
   createForm(): void {
-    this.form = new FormGroup({
-      nombre: new FormControl(this.articulo.nombre,
-                              [Validators.required, Validators.minLength(4)],
-                              [this.uniqueValidator()]),
-      descripcion:
-          new FormControl(this.articulo.descripcion, [Validators.required]),
-      precio_contado: new FormControl(this.articulo.precio_contado,
-                                      [Validators.required, Validators.min(1)]),
-      precio_tarjeta: new FormControl(this.articulo.precio_tarjeta,
-                                      [Validators.required, Validators.min(1)]),
+    this.form = this.fb.group({
+      nombre: [
+        '',
+        [Validators.required, Validators.minLength(4)],
+        [this.uniqueValidator()]
+      ],
+      descripcion: [],
+      precio_contado: [0, [Validators.required, Validators.min(0)]],
+      precio_tarjeta: [0, [Validators.required, Validators.min(0)]],
+      stock_total: [0, [Validators.required, Validators.min(0)]],
+      talles: this.fb.array([])
     });
+    this.form.patchValue(this.articulo);
+    this.articulo = Object.assign(this.articulo, this.form.value);
   }
+
+  addTalle(data: {talle: string, stock: number}) {
+    if (!this.articulo.talles) {
+      this.articulo.talles = [];
+    }
+    this.articulo.talles.push(data);
+  }
+
+  removeTalle(idx: number) { this.articulo.talles.splice(idx); }
 
   ngOnInit() {}
 

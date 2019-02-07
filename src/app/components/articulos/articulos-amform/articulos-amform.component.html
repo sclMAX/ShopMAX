@@ -7,30 +7,36 @@
 <ion-content color="medium">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
     <ion-grid fixed>
+      <!--Imagen-->
       <ion-row justify-content-center>
         <ion-col align-self-center size="auto">
-          <div style="max-width: 250px;">
-            <ion-img placeholder="Agrega una imagen" [src]="(articulo?.imageURL)?articulo?.imageURL:'assets/250x250.png'"></ion-img>
-            <ion-progress-bar [hidden]="!showProgress" [value]="(uploadPercent | async)"></ion-progress-bar>
-            <ion-fab horizontal="end" vertical="top" slot="fixed">
-              <ion-fab-button size="small" color="tertiary" (click)="image.click()">
-                <ion-icon name="image"></ion-icon>
-                <input #image hidden type="file" accept=".jpg, .png" (change)="uploadFile($event)">
-              </ion-fab-button>
-            </ion-fab>
-          </div>
+          <ion-img placeholder="Agrega una imagen" [src]="(articulo?.imageURL)?articulo?.iconURL:'assets/250x250.png'">
+          </ion-img>
+          <ion-progress-bar [hidden]="!showProgress" [value]="(uploadPercent | async)"></ion-progress-bar>
+        </ion-col>
+        <ion-col size="1">
+          <ion-fab horizontal="center" vertical="center" edge>
+            <ion-fab-button size="small" color="tertiary" (click)="image.click()">
+              <ion-icon name="image"></ion-icon>
+              <input #image hidden type="file" accept=".jpg, .png" (change)="uploadFile($event)">
+            </ion-fab-button>
+          </ion-fab>
         </ion-col>
       </ion-row>
+      <!--Titulo-->
       <ion-row>
         <ion-col>
-          <ion-badge>Titulo</ion-badge> 
-          <ion-badge *ngIf="form.controls['nombre']?.errors?.notUnique"  color="danger">Articulo Existente!</ion-badge>
-          <ion-badge *ngIf="form.controls['nombre']?.errors?.minlength"  color="warning">Cuatro caracteres minimo!</ion-badge>
+          <ion-badge>Titulo</ion-badge>
+          <ion-badge *ngIf="form.controls['nombre']?.errors?.notUnique" color="danger">Articulo Existente!</ion-badge>
+          <ion-badge *ngIf="form.controls['nombre']?.errors?.minlength" color="warning">Cuatro caracteres minimo!
+          </ion-badge>
           <ion-item>
-            <ion-input type="text" formControlName="nombre"  placeholder="Titulo" ></ion-input>
+            <ion-input type="text" formControlName="nombre" placeholder="Titulo">
+            </ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
+      <!--Detalle-->
       <ion-row>
         <ion-col>
           <ion-badge>Descripción</ion-badge>
@@ -39,24 +45,90 @@
           </ion-item>
         </ion-col>
       </ion-row>
+      <!--Precios-->
       <ion-row>
         <ion-col>
           <ion-badge>Precio Contado</ion-badge>
-          <ion-badge *ngIf="form.controls['precio_contado']?.errors?.min"  color="danger">min:1!</ion-badge>
+          <ion-badge *ngIf="form.controls['precio_contado']?.errors?.min" color="danger">min:0!</ion-badge>
           <ion-item>
-            <ion-input type="number" formControlName="precio_contado" placeholder="Precio Contado" min="0.00"></ion-input>
+            <ion-input type="number" formControlName="precio_contado" placeholder="Precio Contado">
+            </ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-badge>Precio Tarjeta</ion-badge>
-          <ion-badge *ngIf="form.controls['precio_tarjeta']?.errors?.min"  color="danger">min:1!</ion-badge>
+          <ion-badge *ngIf="form.controls['precio_tarjeta']?.errors?.min" color="danger">min:0!</ion-badge>
           <ion-item>
-            <ion-input type="number" formControlName="precio_tarjeta" placeholder="Precio con Tarjeta" min="0"></ion-input>
+            <ion-input type="number" formControlName="precio_tarjeta" placeholder="Precio con Tarjeta">
+            </ion-input>
           </ion-item>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-badge>Talles</ion-badge><br>
+          <ion-fab-button size="small" (click)="articulo.talles = (articulo.talles)?  null: [{talle:'40', stock: 5}]">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+          <ion-toggle hidden #isTalles></ion-toggle>
+        </ion-col>
+      </ion-row>
+      <!--Stock Total-->
+      <ion-row #StockTotal [hidden]="articulo.talles && articulo.talles.length > 0">
+        <ion-col size="4">
+          <ion-badge>Stock</ion-badge>
+          <ion-badge *ngIf="form.controls['stock_total']?.errors?.min" color="danger">min:0!</ion-badge>
+          <ion-item>
+            <ion-input type="number" formControlName="stock_total" placeholder="Stock">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!--Talles-->
+      <ion-row [hidden]="!StockTotal.hidden">
+        <ion-col>
+          <!--Encabezados-->
+          <ion-row style="padding-bottom: 0;">
+            <ion-col size="4" style="padding-bottom: 0;">
+              <ion-badge>Talle</ion-badge>
+            </ion-col>
+            <ion-col size="6" style="padding-bottom: 0;">
+              <ion-badge>Stock</ion-badge>
+            </ion-col>
+            <ion-col size="2" style="padding-bottom: 0;"></ion-col>
+          </ion-row>
+          <!--Talle Item-->
+          <ion-row *ngFor="let talle of articulo.talles; let idx=index">
+            <ion-col size="4">
+              <ion-badge *ngIf="form.controls['stock_total']?.errors?.min" color="danger">min:0!</ion-badge>
+              <ion-item>
+                <ion-input type="number" formControlName="stock_total" placeholder="Stock">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-badge *ngIf="form.controls['stock_total']?.errors?.min" color="danger">min:0!</ion-badge>
+              <ion-item>
+                <ion-input type="number" formControlName="stock_total" placeholder="Stock">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="2">
+              <ion-fab-button size="small" color="danger">
+                <ion-icon name="remove"></ion-icon>
+              </ion-fab-button>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </ion-grid>
   </form>
+  <ion-row>
+    <ion-col>
+      <pre>{{form.value | json}}</pre>
+    </ion-col>
+    <ion-col>
+      <pre>{{form.value | json}}</pre>
+    </ion-col>
+  </ion-row>
 </ion-content>
 <ion-footer>
   <ion-fab horizontal="start" vertical="bottom" slot="fixed">
