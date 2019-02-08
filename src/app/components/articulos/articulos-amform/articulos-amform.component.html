@@ -65,14 +65,14 @@
         </ion-col>
         <ion-col size="auto">
           <ion-badge>Talles</ion-badge><br>
-          <ion-fab-button size="small" (click)="articulo.talles = (articulo.talles)?  null: [{talle:'40', stock: 5}]">
+          <ion-fab-button size="small" (click)="addTalle()">
             <ion-icon name="add"></ion-icon>
           </ion-fab-button>
           <ion-toggle hidden #isTalles></ion-toggle>
         </ion-col>
       </ion-row>
       <!--Stock Total-->
-      <ion-row #StockTotal [hidden]="articulo.talles && articulo.talles.length > 0">
+      <ion-row [hidden]="talles.controls.length > 0">
         <ion-col size="4">
           <ion-badge>Stock</ion-badge>
           <ion-badge *ngIf="form.controls['stock_total']?.errors?.min" color="danger">min:0!</ion-badge>
@@ -83,7 +83,8 @@
         </ion-col>
       </ion-row>
       <!--Talles-->
-      <ion-row [hidden]="!StockTotal.hidden">
+
+      <ion-row [hidden]="talles.controls.length == 0">
         <ion-col>
           <!--Encabezados-->
           <ion-row style="padding-bottom: 0;">
@@ -96,39 +97,31 @@
             <ion-col size="2" style="padding-bottom: 0;"></ion-col>
           </ion-row>
           <!--Talle Item-->
-          <ion-row *ngFor="let talle of articulo.talles; let idx=index">
-            <ion-col size="4">
-              <ion-badge *ngIf="form.controls['stock_total']?.errors?.min" color="danger">min:0!</ion-badge>
-              <ion-item>
-                <ion-input type="number" formControlName="stock_total" placeholder="Stock">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-badge *ngIf="form.controls['stock_total']?.errors?.min" color="danger">min:0!</ion-badge>
-              <ion-item>
-                <ion-input type="number" formControlName="stock_total" placeholder="Stock">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="2">
-              <ion-fab-button size="small" color="danger">
-                <ion-icon name="remove"></ion-icon>
-              </ion-fab-button>
-            </ion-col>
+          <ion-row formArrayName="talles" *ngFor="let talle of talles.controls; let idx=index">
+            <ion-row [formGroupName]="idx">
+              <ion-col size="4">
+                <ion-item>
+                  <ion-input type="text" formControlName="talle" placeholder="Talle">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6">
+                <ion-item>
+                  <ion-input type="number" formControlName="stock" placeholder="Stock">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-fab-button size="small" color="danger" (click)="removeTalle(idx)">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-fab-button>
+              </ion-col>
+            </ion-row>
           </ion-row>
         </ion-col>
       </ion-row>
     </ion-grid>
   </form>
-  <ion-row>
-    <ion-col>
-      <pre>{{form.value | json}}</pre>
-    </ion-col>
-    <ion-col>
-      <pre>{{form.value | json}}</pre>
-    </ion-col>
-  </ion-row>
 </ion-content>
 <ion-footer>
   <ion-fab horizontal="start" vertical="bottom" slot="fixed">

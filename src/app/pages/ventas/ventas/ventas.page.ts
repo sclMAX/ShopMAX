@@ -32,8 +32,8 @@ export class VentasPage implements OnInit {
           return data;
         }));
     this.loadScript()
-        .then(data => console.log('data', data))
-        .catch(error => console.log('Error', error));
+        .then()
+        .catch(error => console.error(error));
   }
 
   loadScript() {
