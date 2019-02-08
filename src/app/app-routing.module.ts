@@ -11,8 +11,8 @@ const routes: Routes = [
   },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
   {
-    path: 'user',
-    loadChildren: './pages/user/user.module#UserPageModule',
+    path: 'configuracion',
+    loadChildren: './pages/configuracion/configuracion.module#ConfiguracionPageModule',
     canActivate: [AuthGuard]
   },
   { path: 'ventas', loadChildren: './pages/ventas/ventas/ventas.module#VentasPageModule', canActivate: [AuthGuard] },

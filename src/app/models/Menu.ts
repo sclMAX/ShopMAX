@@ -1,6 +1,7 @@
 
 export interface MenuItemInterface {
-  title: string;
+  isDivisor: boolean;
+  title?: string;
   url?: string;
   icon?: string;
 }

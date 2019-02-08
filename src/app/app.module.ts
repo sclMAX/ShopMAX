@@ -1,3 +1,4 @@
+import { FiltrarArticulosPipe } from './components/pipes/filtrar-articulos.pipe';
 import {AuthGuard} from './guards/auth.guard';
 import {LoginPage} from './pages/login/login.page';
 import {AuthService} from 'src/app/services/auth/auth.service';

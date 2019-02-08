@@ -1,11 +1,11 @@
-import { ArticuloInterface } from './../../../models/Articulo';
+import {ArticuloInterface} from './../../../models/Articulo';
 import {
   ArticulosAMFormComponent
 } from './../../../components/articulos/articulos-amform/articulos-amform.component';
-import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController } from '@ionic/angular';
-import { ArticulosService } from 'src/app/services/articulos.service';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {ModalController, LoadingController} from '@ionic/angular';
+import {ArticulosService} from 'src/app/services/articulos.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-articulos',
@@ -16,26 +16,26 @@ export class ArticulosPage implements OnInit {
   articulos: Observable<ArticuloInterface[]>;
 
   constructor(private modalCtrl: ModalController,
-    private loadCtrl: LoadingController,
-    private articuloService: ArticulosService) { }
+              private loadCtrl: LoadingController,
+              private articuloService: ArticulosService) {}
 
   ngOnInit() { this.loadData(); }
 
-  async addArticulo(articulo?: ArticuloInterface) {
+  async amArticulo(articulo?: ArticuloInterface) {
     const modal = await this.modalCtrl.create({
       component: ArticulosAMFormComponent,
       backdropDismiss: false,
       cssClass: 'articulo-add-modal'
     });
     if (articulo) {
-      modal.componentProps = { 'articulo': articulo };
+      modal.componentProps = {'articulo': articulo};
     }
     await modal.present();
   }
 
-  // TODO: Agregar Eliminar Item,
-
-  async loadData() {
-    return this.articulos = this.articuloService.getAll();
+  async removeArticulo(articulo: ArticuloInterface) {
+    return await this.articuloService.remove(articulo.id);
   }
+
+  async loadData() { return this.articulos = this.articuloService.getAll(); }
 }

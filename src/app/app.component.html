@@ -9,14 +9,18 @@
       <ion-content color="medium">
         <ion-list color="medium" no-padding>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="p?.url" color="medium">
+            <ion-item *ngIf="!p?.isDivisor else divisor;" [routerDirection]="'root'" [routerLink]="p?.url"
+              color="medium">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title }}
               </ion-label>
             </ion-item>
+            <ng-template #divisor>
+              <ion-item-divider color="medium"></ion-item-divider>
+            </ng-template>
           </ion-menu-toggle>
-          <ion-item-divider color="medium"></ion-item-divider>
+
           <ion-menu-toggle auto-hide="false">
             <ion-item (click)="logout()" [routerDirection]="'root'" routerLink="/login" color="medium">
               <ion-icon slot="start" name="log-out"></ion-icon>

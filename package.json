@@ -1,8 +1,8 @@
 {
   "name": "ShopMAX",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "sclMAX",
+  "homepage": "https://shopmax.fireaseapp.com/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -10,15 +10,15 @@
       <!--Imagen-->
       <ion-row justify-content-center>
         <ion-col align-self-center size="auto">
-          <ion-img placeholder="Agrega una imagen" [src]="(articulo?.imageURL)?articulo?.iconURL:'assets/250x250.png'">
-          </ion-img>
-          <ion-progress-bar [hidden]="!showProgress" [value]="(uploadPercent | async)"></ion-progress-bar>
+          <ion-badge>Imagen</ion-badge>
+          <ion-img #im placeholder="Imagen" [src]="tmpImage | async"></ion-img>
+          <ion-progress-bar [value]="(uploadPercent | async)"></ion-progress-bar>
         </ion-col>
         <ion-col size="1">
           <ion-fab horizontal="center" vertical="center" edge>
-            <ion-fab-button size="small" color="tertiary" (click)="image.click()">
+            <ion-fab-button size="small" color="tertiary" (click)="imageInput.click()">
               <ion-icon name="image"></ion-icon>
-              <input #image hidden type="file" accept=".jpg, .png" (change)="uploadFile($event)">
+              <input #imageInput hidden type="file" accept=".jpg, .png" (change)="onChangeImage($event)">
             </ion-fab-button>
           </ion-fab>
         </ion-col>

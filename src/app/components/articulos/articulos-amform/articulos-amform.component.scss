@@ -5,6 +5,10 @@ ion-img{
     max-width: 250px;
 }
 
+ion-progress-bar{
+    --background: var(--ion-color-medium);
+}
+
 ion-badge {
     --background: var(--ion-color-tertiary);
 }
