@@ -7,11 +7,11 @@ const cors = require('cors');
 const app = express();
 
 // Automatically allow cross-origin requests
-app.use(cors({origin: true}));
+app.use(cors({ origin: true }));
 
-function getUser(uid){
+function getUser(uid) {
   const db = admin.firestore();
-  return db.doc(`users/${uid}`).get().then(data=>{
+  return db.doc(`users/${uid}`).get().then(data => {
     console.log('USER:', data.data());
     return data;
   });
@@ -20,7 +20,7 @@ function getUser(uid){
 // build multiple CRUD interfaces:
 app.post('/:uid', (req, res) => {
   const uid = req.params['uid'];
-  getUser(uid).then();
+  getUser(uid).then().catch();
   console.log('uid:', uid);
   const token = req.body.token;
   console.log('token:', token);
@@ -33,7 +33,7 @@ app.post('/:uid', (req, res) => {
   if (req) {
     var mercadopago = require('mercadopago');
     mercadopago.configurations.setAccessToken(
-        'TEST-3257709747412373-012413-9b459b2bb667535ea246a09be2ed50f9-24703435');
+      'TEST-3257709747412373-012413-9b459b2bb667535ea246a09be2ed50f9-24703435');
 
     var payment_data = {
       transaction_amount: 192,
@@ -42,21 +42,22 @@ app.post('/:uid', (req, res) => {
       installments: installments,
       payment_method_id: payment_method_id,
       issuer_id: issuer_id,
-      payer: {email: 'maxisoftman@gmail.com'}
+      payer: { email: 'maxisoftman@gmail.com' }
     };
 
     // Guarda y postea el pago
     mercadopago.payment.save(payment_data)
-        .then(function(data) {
-          // ...
-          // Imprime el estado del pago
-          console.log(data.body);
-          res.redirect(`http://localhost:8100/articulos/${data.status}`);
-        })
-        .catch(function(error) {
-          // ...
-          console.log('ERROR:', error);
-        });
+      .then((data) => {
+        // ...
+        // Imprime el estado del pago
+        console.log(data.body);
+        res.redirect(`http://localhost:8100/articulos/${data.status}`);
+        return data;
+      })
+      .catch((error) => {
+        // ...
+        console.log('ERROR:', error);
+      });
   } else {
     res.send('ERROR');
   }
