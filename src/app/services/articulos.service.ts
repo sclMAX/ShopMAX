@@ -1,3 +1,4 @@
+import {AngularFireStorage} from '@angular/fire/storage';
 import {ArticuloInterface} from './../models/Articulo';
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
@@ -7,8 +8,8 @@ import {Observable} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class ArticulosService {
-  constructor(private afs: AngularFirestore, private userService: UserService) {
-  }
+  constructor(private afs: AngularFirestore, private userService: UserService,
+              private storage: AngularFireStorage) {}
 
   sanitize(data: ArticuloInterface): ArticuloInterface {
     data.nombre = data.nombre.toUpperCase();
@@ -26,12 +27,23 @@ export class ArticulosService {
     return ref.add(data).then(art => art.update({id: art.id}));
   }
 
+  getImgFilePath(prefix: string, id: string): string {
+    return `articulos/${this.userService.userId}/${prefix}_${id}.jpg`;
+  }
+
   remove(id: string) {
     const ref = this.afs.collection('articulos')
                     .doc(this.userService.userId)
                     .collection('articulos')
                     .doc(id);
-    return ref.delete();
+    return ref.delete().then(async() => {
+      await this.storage.ref(this.getImgFilePath('img', id))
+          .delete()
+          .toPromise();
+      return await this.storage.ref(this.getImgFilePath('ico', id))
+          .delete()
+          .toPromise();
+    });
   }
 
   update(data: ArticuloInterface) {

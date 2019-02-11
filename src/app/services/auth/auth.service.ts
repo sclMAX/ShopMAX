@@ -1,19 +1,22 @@
-import { UserService } from './../user.service';
-import { UserInterface } from './../../models/User';
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable, of } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import {UserService} from './../user.service';
+import {UserInterface} from './../../models/User';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {Observable, of} from 'rxjs';
+import {map, switchMap, take} from 'rxjs/operators';
 import {
   AngularFirestore,
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
-import { User } from 'firebase';
+import {User} from 'firebase';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth, private userService: UserService, private afs: AngularFirestore) {
-    this.setUser();
+  constructor(private afAuth: AngularFireAuth, private userService: UserService,
+              private afs: AngularFirestore) {
+    if (!this.userService.user) {
+      this.setUser();
+    }
   }
 
   async setUser() {
@@ -24,16 +27,16 @@ export class AuthService {
         return of(null);
       }
     }));
-  return;
+    return;
   }
 
-  async login(credencial: { email: string, password: string }): Promise<boolean> {
+  async login(credencial: {email: string, password: string}): Promise<boolean> {
     try {
       const res = await this.afAuth.auth.signInWithEmailAndPassword(
-        credencial.email, credencial.password);
+          credencial.email, credencial.password);
       const user = await this.userService.getUser(res.user.uid)
-        .pipe(take(1))
-        .toPromise();
+                       .pipe(take(1))
+                       .toPromise();
       if (!user) {
         const data: UserInterface = {
           uid: res.user.uid,
@@ -53,9 +56,7 @@ export class AuthService {
     return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
-  logout() {
-    return this.afAuth.auth.signOut();
-  }
+  logout() { return this.afAuth.auth.signOut(); }
 
 
   processLoginError(error): string {

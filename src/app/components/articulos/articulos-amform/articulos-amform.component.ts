@@ -119,10 +119,6 @@ export class ArticulosAMFormComponent implements OnInit {
 
   async onCancel() { return await this.modalCtrl.dismiss(); }
 
-  private getImgFilePath(prefix: string): string {
-    return `articulos/${this.userService.userId}/${prefix}_${this.articulo.id}.jpg`;
-  }
-
   async onChangeImage(event) {
     this.imgFile = event.target.files[0];
     const reader = new FileReader();
@@ -140,8 +136,10 @@ export class ArticulosAMFormComponent implements OnInit {
       const icon = await this.imgTools.resize(file, 80, 80)
                        .pipe(take(1), map(img => img))
                        .toPromise();
-      const filePath = this.getImgFilePath('img');
-      const iconPath = this.getImgFilePath('ico');
+      const filePath =
+          this.articuloService.getImgFilePath('img', this.articulo.id);
+      const iconPath =
+          this.articuloService.getImgFilePath('ico', this.articulo.id);
       const fileRef = this.storage.ref(filePath);
       const iconRef = this.storage.ref(iconPath);
       const task_icon = this.storage.upload(iconPath, icon);

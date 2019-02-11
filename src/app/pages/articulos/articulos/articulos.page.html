@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-searchbar #searchBar></ion-searchbar>
+  <ion-searchbar color="medium" #searchBar></ion-searchbar>
   <ion-list>
     <ion-item-sliding *ngFor="let articulo of ((articulos |async) | filtrarArticulos: searchBar.value)">
       <ion-item button (click)="amArticulo(articulo)">        
