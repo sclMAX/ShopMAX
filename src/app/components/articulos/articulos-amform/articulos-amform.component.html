@@ -39,7 +39,9 @@
       <!--Detalle-->
       <ion-row>
         <ion-col>
-          <ion-badge>Descripción</ion-badge>
+          <ion-badge>
+            <ion-label>Descripción</ion-label>
+          </ion-badge>
           <ion-item>
             <ion-input type="text" formControlName="descripcion" placeholder="Descripcion"></ion-input>
           </ion-item>
@@ -48,7 +50,9 @@
       <!--Precios-->
       <ion-row>
         <ion-col>
-          <ion-badge>Precio Contado</ion-badge>
+          <ion-badge>
+            <ion-label>Precio Contado</ion-label>
+          </ion-badge>
           <ion-badge *ngIf="form.controls['precio_contado']?.errors?.min" color="danger">min:0!</ion-badge>
           <ion-item>
             <ion-input type="number" formControlName="precio_contado" placeholder="Precio Contado">
@@ -56,7 +60,9 @@
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-badge>Precio Tarjeta</ion-badge>
+          <ion-badge>
+            <ion-label>Precio Tarjeta</ion-label>
+          </ion-badge>
           <ion-badge *ngIf="form.controls['precio_tarjeta']?.errors?.min" color="danger">min:0!</ion-badge>
           <ion-item>
             <ion-input type="number" formControlName="precio_tarjeta" placeholder="Precio con Tarjeta">
@@ -64,7 +70,9 @@
           </ion-item>
         </ion-col>
         <ion-col size="auto">
-          <ion-badge>Talles</ion-badge><br>
+          <ion-badge>
+            <ion-label>Talles</ion-label>
+          </ion-badge><br>
           <ion-fab-button size="small" (click)="addTalle()">
             <ion-icon name="add"></ion-icon>
           </ion-fab-button>
@@ -74,7 +82,9 @@
       <!--Stock Total-->
       <ion-row [hidden]="talles.controls.length > 0">
         <ion-col size="4">
-          <ion-badge>Stock</ion-badge>
+          <ion-badge>
+            <ion-label>Stock</ion-label>
+          </ion-badge>
           <ion-badge *ngIf="form.controls['stock_total']?.errors?.min" color="danger">min:0!</ion-badge>
           <ion-item>
             <ion-input type="number" formControlName="stock_total" placeholder="Stock">
@@ -89,10 +99,14 @@
           <!--Encabezados-->
           <ion-row style="padding-bottom: 0;">
             <ion-col size="4" style="padding-bottom: 0;">
-              <ion-badge>Talle</ion-badge>
+              <ion-badge>
+                <ion-label>Talle</ion-label>
+              </ion-badge>
             </ion-col>
             <ion-col size="6" style="padding-bottom: 0;">
-              <ion-badge>Stock</ion-badge>
+              <ion-badge>
+                <ion-label>Stock</ion-label>
+              </ion-badge>
             </ion-col>
             <ion-col size="2" style="padding-bottom: 0;"></ion-col>
           </ion-row>

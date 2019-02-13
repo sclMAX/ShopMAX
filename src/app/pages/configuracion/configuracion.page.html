@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,22 +7,43 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
   <ion-list>
-    <ion-item-group>
-      <ion-item-divider>Divisor</ion-item-divider>
-      <ion-item>un item</ion-item>
-      <ion-item>otro item</ion-item>
-    </ion-item-group>
-    <ion-item-group>
-      <ion-item-divider>Otro</ion-item-divider>
-      <ion-item>un item</ion-item>
-      <ion-item>otro item</ion-item>
-    </ion-item-group>
-
+    <form [formGroup]="form" novalidate>
+      <ion-item-group>
+        <ion-item-divider color="medium">Usuario</ion-item-divider>
+        <ion-item>
+          <ion-label>Nombre:</ion-label>
+          <ion-input type="text" formControlName="displayName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Telefono:</ion-label>
+          <ion-input type="tel" formControlName="phoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>E-Mail:</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+      </ion-item-group>
+      <ion-item-group formGroupName="mp_config">
+        <ion-item-divider color="medium">Mercado Pago</ion-item-divider>
+        <ion-item>
+          <ion-label>E-Mail:</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Public Key:</ion-label>
+          <ion-input type="text" formControlName="public_key"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Access Token:</ion-label>
+          <ion-input type="text" formControlName="access_token"></ion-input>
+        </ion-item>
+      </ion-item-group>
+    </form>
   </ion-list>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button type="submit" (click)="onSubmit()" [disabled]="!form.valid || !isChanged">
       <ion-icon name="save"></ion-icon>
     </ion-fab-button>
   </ion-fab>

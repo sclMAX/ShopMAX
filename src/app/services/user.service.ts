@@ -1,3 +1,4 @@
+import {AngularFireAuth} from '@angular/fire/auth';
 import {UserInterface} from './../models/User';
 import {Injectable} from '@angular/core';
 import {
@@ -13,11 +14,11 @@ export class UserService {
   private currentUserUid = '';
   private currentUserData: UserInterface;
 
-  constructor(private afs: AngularFirestore) {}
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) {}
 
   get user() { return this.currentUser; }
 
-  get userData(){return this.currentUserData;}
+  get userData() { return this.currentUserData; }
 
   set user(newUser) {
     this.currentUser = newUser.pipe(map(user => {
@@ -32,6 +33,10 @@ export class UserService {
   get userId() { return this.currentUserUid; }
 
   set userId(uid) { this.currentUserUid = uid; }
+
+  changeEmail(new_email: string) {
+    return this.afAuth.auth.currentUser.updateEmail(new_email);
+  }
 
   getUser(uid: string) {
     return this.afs.collection('users').doc<UserInterface>(uid).valueChanges();

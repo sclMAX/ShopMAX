@@ -1,27 +1,43 @@
-import { AuthGuard } from './guards/auth.guard';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {AuthGuard} from './guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'ventas', pathMatch: 'full' },
+  {path: '', redirectTo: 'ventas', pathMatch: 'full'},
   {
     path: 'articulos',
-    loadChildren: './pages/articulos/articulos/articulos.module#ArticulosPageModule',
+    loadChildren:
+        './pages/articulos/articulos/articulos.module#ArticulosPageModule',
     canActivate: [AuthGuard]
   },
-  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
+  {path: 'login', loadChildren: './pages/login/login.module#LoginPageModule'},
   {
     path: 'configuracion',
-    loadChildren: './pages/configuracion/configuracion.module#ConfiguracionPageModule',
+    loadChildren:
+        './pages/configuracion/configuracion.module#ConfiguracionPageModule',
     canActivate: [AuthGuard]
   },
-  { path: 'ventas', loadChildren: './pages/ventas/ventas/ventas.module#VentasPageModule', canActivate: [AuthGuard] },
-  { path: 'procesar-pago', loadChildren: './pages/ventas/procesar-pago/procesar-pago.module#ProcesarPagoPageModule' }
+  {
+    path: 'ventas',
+    loadChildren: './pages/ventas/ventas/ventas.module#VentasPageModule',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'procesar-pago',
+    loadChildren:
+        './pages/ventas/procesar-pago/procesar-pago.module#ProcesarPagoPageModule'
+  },
+  {
+    path: 'clientes',
+    loadChildren:
+        './pages/clientes/clientes-routing.module#ClientesRoutingModule',
+    canActivate: [AuthGuard]
+  }
 
 
 
 ];
 
-@NgModule({ imports: [RouterModule.forRoot(routes)], exports: [RouterModule] })
+@NgModule({imports: [RouterModule.forRoot(routes)], exports: [RouterModule]})
 export class AppRoutingModule {
 }

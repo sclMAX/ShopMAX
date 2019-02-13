@@ -1,18 +1,14 @@
 import {UserService} from './services/user.service';
 import {MenuItemInterface} from './models/Menu';
 import {AuthService} from './services/auth/auth.service';
-import {UserInterface} from './models/User';
-import {Observable, of} from 'rxjs';
 import {Component} from '@angular/core';
 
 import {Platform, LoadingController} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {map, switchMap} from 'rxjs/operators';
 
 @Component({selector: 'app-root', templateUrl: 'app.component.html'})
 export class AppComponent {
-  user: Observable<UserInterface>;
   public appPages: MenuItemInterface[];
 
 
@@ -30,7 +26,6 @@ export class AppComponent {
         await this.loadCtrl.create({message: 'Conectando con el Servidor...'});
     await load.present();
     await this.authService.setUser();
-    this.user = await this.userService.user;
     this.initializeMenu();
     this.statusBar.styleDefault();
     this.splashScreen.hide();
@@ -40,6 +35,7 @@ export class AppComponent {
   initializeMenu() {
     this.appPages = [
       {isDivisor: false, title: 'Ventas', url: '/ventas', icon: 'cart'},
+      {isDivisor: false, title: 'Clientes', url: '/clientes', icon: 'people'},
       {isDivisor: false, title: 'Articulos', url: '/articulos', icon: 'shirt'},
       {isDivisor: true},
       {

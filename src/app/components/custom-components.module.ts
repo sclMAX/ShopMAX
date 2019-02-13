@@ -8,7 +8,9 @@ import {MenuitemComponent} from './menuitem/menuitem.component';
 import {
   ArticulosAMFormComponent
 } from './articulos/articulos-amform/articulos-amform.component';
-import { FiltrarArticulosPipe } from './pipes/filtrar-articulos.pipe';
+import {FiltrarArticulosPipe} from './pipes/filtrar-articulos.pipe';
+import {FiltrarClientesPipe} from './pipes/filtrar-clientes.pipe';
+import { AmClienteComponent } from './clientes/am-cliente/am-cliente.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { FiltrarArticulosPipe } from './pipes/filtrar-articulos.pipe';
     LoginComponent,
     MenuitemComponent,
     ArticulosAMFormComponent,
-    FiltrarArticulosPipe
+    FiltrarArticulosPipe,
+    FiltrarClientesPipe,
+    AmClienteComponent,
   ],
   entryComponents: [
     LogoutButtonComponent,
@@ -30,7 +34,8 @@ import { FiltrarArticulosPipe } from './pipes/filtrar-articulos.pipe';
     LoginComponent,
     MenuitemComponent,
     ArticulosAMFormComponent,
-    FiltrarArticulosPipe
+    FiltrarArticulosPipe,
+    FiltrarClientesPipe,
   ]
 })
 export class CustomComponentsModule {
