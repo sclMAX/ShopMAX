@@ -8,9 +8,9 @@
       </ion-header>
       <ion-content color="medium">
         <ion-list color="medium" no-padding>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let idx=index;">
             <ion-item *ngIf="!p?.isDivisor else divisor;" [routerDirection]="'root'" [routerLink]="p?.url"
-              color="medium">
+              [color]="(selectedMenu == idx)?'light':'medium'">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title }}

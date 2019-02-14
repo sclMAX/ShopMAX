@@ -36,6 +36,7 @@ import { AmClienteComponent } from './clientes/am-cliente/am-cliente.component';
     ArticulosAMFormComponent,
     FiltrarArticulosPipe,
     FiltrarClientesPipe,
+    AmClienteComponent,
   ]
 })
 export class CustomComponentsModule {

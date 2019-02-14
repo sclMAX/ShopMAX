@@ -1,3 +1,93 @@
-<p>
-  am-cliente works!
-</p>
+<ion-content padding color="medium">
+  <ion-grid fixed>
+    <form [formGroup]="form" novalidate>
+      <ion-row>
+        <!--Nombre-->
+        <ion-col>
+          <ion-badge color="tertiary">
+            <ion-label>Nombre</ion-label>
+          </ion-badge>
+          <ion-badge *ngIf="form.controls['nombre']?.errors?.notUnique" color="danger">Cliente Existente!</ion-badge>
+          <ion-item style="min-width: 200px;">
+            <ion-input type="text" formControlName="nombre"></ion-input>
+          </ion-item>
+        </ion-col>
+        <!--DNI-->
+        <ion-col size="auto">
+          <ion-badge color="tertiary">
+            <ion-label>DNI</ion-label>
+          </ion-badge>
+          <ion-item style="max-width: 140px;">
+            <ion-input type="number" formControlName="dni"></ion-input>
+          </ion-item>
+        </ion-col>
+        <!--Limite_credito-->
+        <ion-col size="auto">
+          <ion-badge color="tertiary">
+            <ion-label>Limite Credito</ion-label>
+          </ion-badge>
+          <ion-item style="max-width: 140px;">
+            <ion-input type="number" formControlName="limite_credito"></ion-input>
+          </ion-item>
+        </ion-col>
+        <!--Telefono_movil-->
+        <ion-col size="auto">
+          <ion-badge color="tertiary">
+            <ion-label>Tel. Movil</ion-label>
+          </ion-badge>
+          <ion-item style="max-width: 140px;">
+            <ion-input type="text" formControlName="telefono_movil"></ion-input>
+          </ion-item>
+        </ion-col>
+        <!--Telefono_fijo-->
+        <ion-col size="auto">
+          <ion-badge color="tertiary">
+            <ion-label>Tel. Fijo</ion-label>
+          </ion-badge>
+          <ion-item style="max-width: 140px;">
+            <ion-input type="text" formControlName="telefono_fijo"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!--Email Direccion-->
+      <ion-row>
+        <!--Direccion-->
+        <ion-col>
+          <ion-badge color="tertiary">
+            <ion-label>Direccion</ion-label>
+          </ion-badge>
+          <ion-item style="min-width: 200px;">
+            <ion-input type="text" formControlName="direccion"></ion-input>
+          </ion-item>
+        </ion-col>
+        <!--Email-->
+        <ion-col>
+          <ion-badge color="tertiary">
+            <ion-label>E-Mail</ion-label>
+          </ion-badge>
+          <ion-item style="min-width: 200px;">
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!--Comentarios-->
+      <ion-row>
+        <ion-col>
+          <ion-badge color="tertiary">
+            <ion-label>Comentarios</ion-label>
+          </ion-badge>
+          <ion-item style="min-width: 150px;">
+            <ion-textarea rows="4" type="text" formControlName="comentarios"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab-button type="submit" [disabled]="!form.valid" (click)="onSubmit()">
+    <ion-icon name="save"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<!--TODO: Agregar placeholders-->

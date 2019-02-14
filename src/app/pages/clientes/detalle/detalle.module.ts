@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DetallePage } from './detalle.page';
+import { CustomComponentsModule } from 'src/app/components/custom-components.module';
 
 const routes: Routes = [
   {
@@ -19,8 +20,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    CustomComponentsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [DetallePage]
 })
-export class DetallePageModule {}
+export class DetallePageModule { }

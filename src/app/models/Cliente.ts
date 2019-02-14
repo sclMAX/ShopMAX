@@ -5,7 +5,8 @@ export interface ClienteInterface {
   dni?: number;
   email?: string;
   direccion?: string;
-  telefonos?: string[];
+  telefono_movil?: string;
+  telefono_fijo?: string;
   limite_credito?: number;
   fecha_ingreso?: firebase.firestore.Timestamp;
   fecha_ultima_compra?: firebase.firestore.Timestamp;

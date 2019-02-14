@@ -1,13 +1,13 @@
 <ion-header>
-  
+
   <ion-toolbar color="dark">
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-          <ion-back-button defaultHref="/clientes"></ion-back-button>
-        </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/clientes"></ion-back-button>
+    </ion-buttons>
     <ion-title text-center>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>
-
+<ion-content>
+  <am-cliente [cliente]="cliente"></am-cliente>
 </ion-content>
