@@ -3,7 +3,11 @@ import {
   ArticulosAMFormComponent
 } from './../../../components/articulos/articulos-amform/articulos-amform.component';
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ModalController, LoadingController} from '@ionic/angular';
+import {
+  ModalController,
+  LoadingController,
+  AlertController
+} from '@ionic/angular';
 import {ArticulosService} from 'src/app/services/articulos.service';
 import {Observable, Subscription} from 'rxjs';
 
@@ -18,7 +22,8 @@ export class ArticulosPage implements OnInit,
   private subArticulos: Subscription;
 
   constructor(private modalCtrl: ModalController,
-              private articuloService: ArticulosService) {}
+              private articuloService: ArticulosService,
+              private alertCtrl: AlertController) {}
 
   ngOnInit() {
     this.subArticulos =
@@ -40,6 +45,19 @@ export class ArticulosPage implements OnInit,
   }
 
   async removeArticulo(articulo: ArticuloInterface) {
-    return await this.articuloService.remove(articulo.id);
+    const alert = await this.alertCtrl.create({
+      message:
+          `Esta seguro que quiere <strong style="color:red;">Eliminar</strong> el Articulo: <strong>${articulo.nombre}</strong>? `,
+      backdropDismiss: false,
+      buttons: [
+        {text: 'Cancelar', role: 'cancel'},
+        {
+          text: 'Aceptar',
+          role: 'ok',
+          handler: async() => this.articuloService.remove(articulo.id)
+        }
+      ]
+    });
+    return await alert.present();
   }
 }

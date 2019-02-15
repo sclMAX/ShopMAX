@@ -32,7 +32,9 @@ const routes: Routes = [
     loadChildren:
         './pages/clientes/clientes-routing.module#ClientesRoutingModule',
     canActivate: [AuthGuard]
-  }
+  },
+  { path: 'ayuda', loadChildren: './pages/ayuda/ayuda-routing.module#AyudaRoutingModule' }
+
 
 
 

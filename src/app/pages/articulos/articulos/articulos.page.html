@@ -5,8 +5,8 @@
     </ion-buttons>
     <ion-title text-center>Articulos</ion-title>
   </ion-toolbar>
-  <ion-toolbar color="medium">
-    <ion-searchbar  #searchBar placeholder="Buscar..."></ion-searchbar>
+  <ion-toolbar color="light">
+    <ion-searchbar color="medium" #searchBar placeholder="Buscar..."></ion-searchbar>
     <small padding-end float-right>{{(articulos  | filtrarArticulos: searchBar.value)?.length}}/{{articulos?.length | number}}</small>
   </ion-toolbar>
 </ion-header>
@@ -14,7 +14,7 @@
 <ion-content>
 
   <ion-virtual-scroll [items]="(articulos  | filtrarArticulos: searchBar.value)">
-    <ion-item-sliding *virtualItem="let articulo">
+    <ion-item-sliding *virtualItem="let articulo" #opt>
       <ion-item button (click)="amArticulo(articulo)">
         <ion-thumbnail slot="start">
           <ion-img [src]="(articulo?.iconURL)?articulo?.iconURL:'assets/no_image.png'"></ion-img>
@@ -32,7 +32,7 @@
         </div>
       </ion-item>
       <ion-item-options>
-        <ion-item-option color="danger" (click)="removeArticulo(articulo)">
+        <ion-item-option  color="danger" (click)="opt.closeOpened();removeArticulo(articulo)">
           <ion-icon name="trash"></ion-icon>
         </ion-item-option>
       </ion-item-options>

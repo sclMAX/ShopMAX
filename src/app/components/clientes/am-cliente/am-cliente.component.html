@@ -84,6 +84,12 @@
     </form>
   </ion-grid>
 </ion-content>
+<ion-fab horizontal="start" vertical="bottom" slot="fixed">
+  <ion-fab-button color="dark" (click)="back.el.click()">
+    <ion-icon name="close"></ion-icon>
+    <ion-back-button hidden defaultHref="/clientes" #back></ion-back-button>
+  </ion-fab-button>
+</ion-fab>
 <ion-fab horizontal="end" vertical="bottom" slot="fixed">
   <ion-fab-button type="submit" [disabled]="!form.valid" (click)="onSubmit()">
     <ion-icon name="save"></ion-icon>

@@ -1,9 +1,6 @@
-import { ClienteService } from './../../../services/cliente.service';
-import { Component, OnInit } from '@angular/core';
-import { ClienteInterface } from 'src/app/models/Cliente';
-import { NavController } from '@ionic/angular';
-import { take } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import {ClienteService} from './../../../services/cliente.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-detalle',
@@ -12,20 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetallePage implements OnInit {
   title: string;
-  cliente: ClienteInterface;
-  constructor(private navCtrl: NavController, private router: ActivatedRoute, private clienteS: ClienteService) { }
+  cliente_id: string;
+  constructor(private router: ActivatedRoute) {}
 
   async ngOnInit() {
     const id = this.router.snapshot.paramMap.get('id');
     if (id) {
-      try {
-        this.title = 'Editar Cliente...';
-        this.cliente = await this.clienteS.getOne(id).pipe(take(1)).toPromise();
-      } catch (e) {
-        // TODO: Controlar Error
-        console.error(e);
-        this.navCtrl.back();
-      }
+      this.title = 'Editar Cliente...';
+      this.cliente_id = id;
     } else {
       this.title = 'Nuevo Cliente...';
     }

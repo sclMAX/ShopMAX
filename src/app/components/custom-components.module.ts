@@ -10,7 +10,7 @@ import {
 } from './articulos/articulos-amform/articulos-amform.component';
 import {FiltrarArticulosPipe} from './pipes/filtrar-articulos.pipe';
 import {FiltrarClientesPipe} from './pipes/filtrar-clientes.pipe';
-import { AmClienteComponent } from './clientes/am-cliente/am-cliente.component';
+import {AmClienteComponent} from './clientes/am-cliente/am-cliente.component';
 
 @NgModule({
   declarations: [

@@ -3,11 +3,10 @@
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <ion-back-button defaultHref="/clientes"></ion-back-button>
     </ion-buttons>
     <ion-title text-center>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <am-cliente [cliente]="cliente"></am-cliente>
+  <am-cliente [id_cliente]="cliente_id"></am-cliente>
 </ion-content>

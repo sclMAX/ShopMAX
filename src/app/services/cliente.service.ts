@@ -34,6 +34,10 @@ export class ClienteService {
         .set(cliente, {merge: true});
   }
 
+  remove(id: string) {
+    return this.Clientes.doc<ClienteInterface>(id).delete();
+  }
+
   async isUnique(nombre: string): Promise<boolean> {
     nombre = nombre.toLowerCase().trim();
     return await this.afs.collection('clientes')

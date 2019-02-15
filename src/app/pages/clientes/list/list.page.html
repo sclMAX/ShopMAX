@@ -5,17 +5,27 @@
     </ion-buttons>
     <ion-title text-center>Clientes</ion-title>
   </ion-toolbar>
-  <ion-toolbar color="medium">
-    <ion-searchbar #searchBar placeholder="Buscar..."></ion-searchbar>
+  <ion-toolbar color="light">
+    <ion-searchbar color="medium" #searchBar placeholder="Buscar..."></ion-searchbar>
     <small padding-end
       float-right>{{(clientes  | filtrarClientes: searchBar.value)?.length | number}}/{{clientes?.length | number}}</small>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let cliente of (clientes  | filtrarClientes: searchBar.value)">
-      <ion-label>{{cliente?.nombre}}</ion-label>
-    </ion-item>
+    <ion-item-sliding #opt *ngFor="let cliente of (clientes  | filtrarClientes: searchBar.value)">
+      <ion-item button [routerLink]="'/clientes/detalle/' + cliente.id" routerDirection="forward">
+        <p>
+          <ion-label>{{cliente?.nombre}} - ({{cliente?.telefono_movil}})</ion-label>
+          <small>{{cliente?.email}}</small>
+        </p>
+      </ion-item>
+      <ion-item-options slot="end">
+        <ion-item-option color="danger" (click)="opt.closeOpened();remove(cliente)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button button routerLink="/clientes/detalle" routerDirection="forward">
