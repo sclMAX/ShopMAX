@@ -6,11 +6,24 @@
     <ion-title text-center>Ventas</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content >
+<ion-content>
   <ion-list>
     <ion-item>
-      producto 500
+      <ion-label>Monto:</ion-label>
+      <ion-input type="number" [(ngModel)]="monto" required></ion-input>
     </ion-item>
-    <ion-item name="pagoButton"></ion-item>
+    <ion-button (click)="loadScript()">Aceptar</ion-button>
+    <ion-item name="pagoButton" text-center>
+      <ion-button *ngIf="loaded" class="button.mercadopago-button">Cta. Cte.</ion-button>
+      <ion-button *ngIf="loaded" class="button.mercadopago-button" slot="start">Contado</ion-button>
+    </ion-item>
   </ion-list>
 </ion-content>
+<ion-footer>
+    <h1>Tarjetas de Prueba</h1><br>
+    <p>      
+      4509 9535 6623 3704 <br>
+      5031 7557 3453 0604 <br>
+      3711 803032 57522<br>
+    </p>
+</ion-footer>

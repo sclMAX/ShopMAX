@@ -23,7 +23,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'procesar-pago',
+    path: 'procesar-pago/:status',
     loadChildren:
         './pages/ventas/procesar-pago/procesar-pago.module#ProcesarPagoPageModule'
   },

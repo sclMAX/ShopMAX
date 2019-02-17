@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {NavParams} from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-procesar-pago',
@@ -7,7 +7,10 @@ import {NavParams} from '@ionic/angular';
   styleUrls: ['./procesar-pago.page.scss'],
 })
 export class ProcesarPagoPage implements OnInit {
-  constructor(private navParam: NavParams) {}
+  parametro: any;
+  constructor(private router: ActivatedRoute) { }
 
-  ngOnInit() { console.log('param:', this.navParam.data); }
+  ngOnInit() {
+    this.parametro = JSON.parse(this.router.snapshot.paramMap.get('status'));
+  }
 }

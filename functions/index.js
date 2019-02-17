@@ -18,8 +18,9 @@ function getUser(uid) {
 }
 
 // build multiple CRUD interfaces:
-app.post('/:uid', (req, res) => {
+app.post('/:uid/:orden', (req, res) => {
   const uid = req.params['uid'];
+  const orden = req.params['orden'];
   getUser(uid).then().catch();
   console.log('uid:', uid);
   const token = req.body.token;
@@ -51,7 +52,7 @@ app.post('/:uid', (req, res) => {
         // ...
         // Imprime el estado del pago
         console.log(data.body);
-        res.redirect(`http://localhost:8100/articulos/${data.status}`);
+        res.redirect(`https://shopmax.firebaseapp.com/procesar-pago/${data.body}`);
         return data;
       })
       .catch((error) => {
